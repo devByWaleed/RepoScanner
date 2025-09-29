@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Github-Repo Files Search App">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <main class="main">
+
+        <section id="input-card">
+            <h1 class="app-title">RepoScan 🔍</h1>
+
+            <p class="app-des">Your lightweight GitHub repo explorer for files.</p>
+
+            <input type="url" id="github-url" class="input-fields" placeholder="Enter Repo URL">
+
+            <div class="branch-section">
+                <select id="select-branch">
+                    <option disabled>Choose</option>
+                    <option value="main">Main</option>
+                    <option value="master">Master</option>
+                    <option value="other">Other (specify)</option>
+                </select>
+                <input type="text" id="custom-branch" class="input-fields" placeholder="Custom Branch Name">
+            </div>
+
+            <button id="fetchBtn">Fetch</button>
+        </section>
+
+
+        <section id="output-card">
+            <h1 class="app-title">RepoScan 🔍</h1>
+
+            <input type="text" id="search" class="input-fields" placeholder="Search For Files">
+
+            <div id="details"></div>
+
+            <div id="result"></div>
+        </section>
+    </main>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
