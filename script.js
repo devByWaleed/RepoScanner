@@ -12,7 +12,7 @@ let outputSection = document.getElementById("output-card");
 let searchBar = document.getElementById("search");
 let detailCont = document.getElementById("details");
 let output = document.getElementById("result");
-let selectedItems = document.querySelectorAll(".item");
+// let selectedItems = document.querySelectorAll(".item");
 
 
 
@@ -42,6 +42,7 @@ function getSelectedValue() {
 }
 
 let searchArray = [];
+let selectedItem = "";
 
 // Function to fetch data from API
 const fetchData = async () => {
@@ -67,8 +68,8 @@ const fetchData = async () => {
     outputSection.style.display = 'flex';
 
     detailCont.innerHTML += `
-        <p>${userName}</p>
-        <p>${repoName}</p>
+        <p style="color: #172554;">${userName}</p>
+        <p style="color: #172554;">${repoName}</p>
     `
 
 
@@ -93,7 +94,8 @@ const fetchData = async () => {
             let path = searchArray[i].path;
 
             output.innerHTML += `
-                <p class="item">${path}</p>
+                <p style="color: #37085eff;">${path} <button onclick="selectedItem = ${path};"
+                >Copy</button></p>
             `
         }
     }
@@ -121,7 +123,7 @@ searchBar.addEventListener("input", function () {
         if (path.toLowerCase().includes(searchBar.value.toLowerCase())) {
 
             output.innerHTML += `
-                <p class="item">${path}</p>
+                <p style="color: #37085eff;">${path} <button style="padding:5px">Copy</button></p>
                 `
         }
     }
@@ -130,11 +132,7 @@ searchBar.addEventListener("input", function () {
 
 // Logic for full path
 
-selectedItems.forEach((item) => {
-    item.addEventListener("click", function () {
-        alert("Working");
-    });
-});
+
 
 
 /*

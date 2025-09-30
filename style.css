@@ -138,11 +138,103 @@ Output Section CSS
     width: 100%;
     overflow: scroll;
     background-color: aquamarine;
-
 }
 
+/* 
+Full Path Container CSS
+*/
+
+/* Fullscreen overlay */
+/* Overlay stays the same */
+.overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* URL container */
+.url {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+    padding: 20px;
+    max-width: 300px;
+    border-radius: 8px;
+    color: whitesmoke;
+    box-shadow: 0 -7px 25px white;
+    background: linear-gradient(90deg, rgba(31, 20, 153, 1) 21%, rgba(9, 9, 121, 1) 84%);
+
+    /* Slide-up animation */
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Path detail row */
+.path-detail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+
+/* URL text */
+.url-animate {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    overflow-x: scroll;
+    border: 1px solid black;
+    color: purple;
+    background-color: #fff;
+}
+
+
+/* Copy button */
+#copy-btn {
+    padding: 8px 12px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(50, 30, 120);
+    transition: background-color 0.3s ease;
+}
+
+#copy-btn:hover {
+    background-color: rgb(24, 8, 82);
+}
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 768px) {
-    #input-card {
+
+    #input-card,
+    #output-card {
         width: 90%;
         margin: auto;
     }
@@ -158,6 +250,20 @@ Output Section CSS
     .input-fields,
     #select-branch {
         padding: 10px;
+    }
+
+    .url {
+        padding: 25px 15px;
+        width: 95%;
+    }
+
+    .url-animate {
+        font-size: 14px;
+    }
+
+    .copy-btn {
+        padding: 6px 10px;
+        font-size: 14px;
     }
 
 }
