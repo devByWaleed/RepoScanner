@@ -12,13 +12,18 @@ let outputSection = document.getElementById("output-card");
 let searchBar = document.getElementById("search");
 let detailCont = document.getElementById("details");
 let output = document.getElementById("result");
-// let selectedItems = document.querySelectorAll(".item");
+let urlSection = document.querySelector("#overlay");
+// let closeBtn = document.getElementById("close-icon");
+let copyBtn = document.getElementById("copy-btn");
 
 
 
 // Hide by default
 otherBranch.style.display = 'none';
 outputSection.style.display = 'none';
+urlSection.style.display = 'none';
+
+
 
 // Logic for custom input field display
 branchSelect.addEventListener('change', function () {
@@ -41,8 +46,15 @@ function getSelectedValue() {
     }
 }
 
+
+
+// Global Variables To Use Anywhere In Code
 let searchArray = [];
-let selectedItem = "";
+let userName = "";
+let repoName = "";
+let branchName = "";
+
+
 
 // Function to fetch data from API
 const fetchData = async () => {
@@ -59,9 +71,13 @@ const fetchData = async () => {
     let repoElements = repoLink.split("/");
     console.log(repoElements);
 
-    let userName = repoElements[repoElements.length - 2]
-    let repoName = repoElements[repoElements.length - 1]
-    let branchName = getSelectedValue();
+    let user = repoElements[repoElements.length - 2]
+    let repo = repoElements[repoElements.length - 1]
+    let branch = getSelectedValue();
+
+    userName = user;
+    repoName = repo;
+    branchName = branch;
 
     inputSection.style.display = 'none';
 
@@ -74,7 +90,7 @@ const fetchData = async () => {
 
 
     // Editing container on loading state
-    output.innerHTML = `<p>⏳ Fetching files...</p>`; // loading state
+    output.innerHTML = `<p style="color: white;>⏳ Fetching files...</p>`; // loading state
 
     // Fetching data
     try {
@@ -82,7 +98,7 @@ const fetchData = async () => {
         const data = await res.json();
 
         if (!data.tree) {
-            output.innerHTML = `<p>⚠️ Could not fetch files. Check repo URL or branch name.</p>`;
+            output.innerHTML = `<p style="color: white;>⚠️ Could not fetch files. Check repo URL or branch name.</p>`;
             return;
         }
 
@@ -94,20 +110,20 @@ const fetchData = async () => {
             let path = searchArray[i].path;
 
             output.innerHTML += `
-                <p style="color: #37085eff;">${path} <button onclick="selectedItem = ${path};"
-                >Copy</button></p>
+                <p style="color: white;">
+                    <button 
+                    style="background: none; border: none; cursor: pointer; font-size: 20px;"
+                    onclick="getURL('${path}')">🔗</button> 
+                    ${path}
+                </p>
             `
         }
     }
     catch (error) {
         output.innerHTML = `<p>❌ Error while fetching data</p>`;
     }
-
-    return searchArray;
-
 }
-
-// Calling main function
+// Calling Main Function
 fetchBtn.addEventListener("click", fetchData);
 
 
@@ -123,20 +139,23 @@ searchBar.addEventListener("input", function () {
         if (path.toLowerCase().includes(searchBar.value.toLowerCase())) {
 
             output.innerHTML += `
-                <p style="color: #37085eff;">${path} <button style="padding:5px">Copy</button></p>
+                <p style="color: white;">
+                    <button 
+                    style="background: none; border: none; cursor: pointer; font-size: 20px;"
+                    onclick="getURL('${path}')">🔗</button> 
+                    ${path}
+                </p>
                 `
         }
     }
 });
 
 
-// Logic for full path
 
+// Function For Full Path
+const getURL = (path) => {
 
-
-
-/*
-if (path.includes("lc-1")) {
+    urlSection.style.display = 'flex';
 
     correctPath = path.replaceAll(" ", "%20");
     console.log(`Original Path: ${path}`);
@@ -144,5 +163,60 @@ if (path.includes("lc-1")) {
 
     let generatedURL = `https://github.com/${userName}/${repoName}/blob/${branchName}/${correctPath}`;
     console.log(`Full URL: ${generatedURL}`);
-}
+
+    urlSection.innerHTML += `
+        <div class="url">
+            <i class="bi bi-x-square" id="close-icon" 
+            style="position: fixed; right: 10px; top: 10px; cursor: pointer;"></i>
+            <h2>Full Path</h2>
+            <div class="path-detail">
+                <p class="url-animate">
+                https://github.com/${userName}/${repoName}/blob/${branchName}/${correctPath}
+                </p>
+                <button ><i class="bi bi-copy"></i></button>
+            </div>
+        </div>
+    `
+
+    // return generatedURL;
+    // onclick="copy()"
+};
+
+
+
+/*
+// Function For Copy Text Functionality
+const copy = () => {
+
+    let URL = getURL();
+    // Check If The Clipboard Api Is Available
+    if (navigator.clipboard) {
+
+        // Copy The Text Inside The Text Field
+        navigator.clipboard.writeText(URL)
+            .then(() => {
+                // Alert The Copied Text
+                alert("Text Copied!!");
+            })
+            .catch((error) => {
+                console.error("Error copying text: ", error);
+                alert("Failed to copy text. Please try again.");
+            });
+    }
+
+    else {
+        // Fallback for older browsers
+        // Select the text field
+        URL.select();
+        URL.setSelectionRange(0, 99999); // For mobile devices
+
+        try {
+            document.execCommand("copy");
+            alert("Text Copied!!");
+        } catch (error) {
+            console.error("Error copying text: ", error);
+            alert("Failed to copy text. Please try again.");
+        }
+    }
+};
 */

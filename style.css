@@ -39,7 +39,7 @@
 
 #input-card:hover {
     transform: translateY(-5px);
-    border: 6px solid purple;
+    /* border: 6px solid purple; */
     box-shadow: 0 0 15px 10px #e6eef0;
 }
 
@@ -66,6 +66,7 @@
     padding: 10px 20px;
     border-radius: 4px;
     width: 100%;
+    color: #0f172a;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid purple;
 }
@@ -115,7 +116,7 @@ Output Section CSS
 
 #output-card:hover {
     transform: translateY(-5px);
-    border: 6px solid purple;
+    /* border: 6px solid purple; */
     box-shadow: 0 0 15px 10px #e6eef0;
 }
 
@@ -136,8 +137,9 @@ Output Section CSS
     height: 34vh;
     padding: 5px;
     width: 100%;
+    border-radius: 5px;
     overflow: scroll;
-    background-color: aquamarine;
+    background: linear-gradient(180deg, rgba(9, 9, 135, 1) 30%, rgba(63, 63, 196, 1) 100%);
 }
 
 /* 
@@ -146,7 +148,7 @@ Full Path Container CSS
 
 /* Fullscreen overlay */
 /* Overlay stays the same */
-.overlay {
+#overlay {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,7 +164,7 @@ Full Path Container CSS
     flex-direction: column;
     row-gap: 10px;
     align-items: center;
-    padding: 20px;
+    padding: 25px 20px;
     max-width: 300px;
     border-radius: 8px;
     color: whitesmoke;
