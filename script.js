@@ -128,27 +128,37 @@ fetchBtn.addEventListener("click", fetchData);
 
 
 
-// Search Bar Logic
+// Debouncing + Fragment For Efficient DOM Behaviour
+let debounceTimer;
 searchBar.addEventListener("input", function () {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runSearch, 300);
+});
+
+function runSearch() {
+    const query = searchBar.value.toLowerCase();
     output.innerHTML = "";
 
-    for (let i = 0; i < searchArray.length; i++) {
+    const fragment = document.createDocumentFragment(); // efficient DOM building
 
+    for (let i = 0; i < searchArray.length; i++) {
         let path = searchArray[i].path;
 
-        if (path.toLowerCase().includes(searchBar.value.toLowerCase())) {
-
-            output.innerHTML += `
-                <p style="color: white;">
-                    <button 
-                    style="background: none; border: none; cursor: pointer; font-size: 20px;"
-                    onclick="getURL('${path}')">🔗</button> 
-                    ${path}
-                </p>
-                `
+        if (path.toLowerCase().includes(query)) {
+            let p = document.createElement("p");
+            p.style.color = "white";
+            p.innerHTML = `
+                <button 
+                  style="background:none;border:none;cursor:pointer;font-size:20px;"
+                  onclick="getURL('${path}')">🔗</button> 
+                ${path}
+            `;
+            fragment.appendChild(p);
         }
     }
-});
+
+    output.appendChild(fragment);
+}
 
 
 
@@ -165,15 +175,24 @@ const getURL = (path) => {
     console.log(`Full URL: ${generatedURL}`);
 
     urlSection.innerHTML += `
-        <div class="url">
-            <i class="bi bi-x-square" id="close-icon" 
-            style="position: fixed; right: 10px; top: 10px; cursor: pointer;"></i>
+        <div class="url">           
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" 
+            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Close" style="position: fixed; right: 10px; top: 10px; cursor: pointer;">
+                <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+
             <h2>Full Path</h2>
             <div class="path-detail">
                 <p class="url-animate">
                 https://github.com/${userName}/${repoName}/blob/${branchName}/${correctPath}
                 </p>
-                <button ><i class="bi bi-copy"></i></button>
+                <button>
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" 
+                    xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Copy">
+                        <rect x="3.5" y="3.5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                        <rect x="5.5" y="1.5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" fill="none"/>
+                    </svg>
+                </button>
             </div>
         </div>
     `
