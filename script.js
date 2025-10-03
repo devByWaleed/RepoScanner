@@ -13,8 +13,6 @@ let searchBar = document.getElementById("search");
 let detailCont = document.getElementById("details");
 let output = document.getElementById("result");
 let urlSection = document.querySelector("#overlay");
-// let closeBtn = document.getElementById("close-icon");
-let copyBtn = document.getElementById("copy-btn");
 
 
 
@@ -69,7 +67,6 @@ const fetchData = async () => {
 
     // Extract userName, repoName & branchName
     let repoElements = repoLink.split("/");
-    console.log(repoElements);
 
     let user = repoElements[repoElements.length - 2]
     let repo = repoElements[repoElements.length - 1]
@@ -90,7 +87,7 @@ const fetchData = async () => {
 
 
     // Editing container on loading state
-    output.innerHTML = `<p style="color: white;>⏳ Fetching files...</p>`; // loading state
+    output.innerHTML = `<p style="color: white;">⏳ Fetching files...</p>`; // loading state
 
     // Fetching data
     try {
@@ -156,7 +153,6 @@ function runSearch() {
             fragment.appendChild(p);
         }
     }
-
     output.appendChild(fragment);
 }
 
@@ -168,16 +164,14 @@ const getURL = (path) => {
     urlSection.style.display = 'flex';
 
     correctPath = path.replaceAll(" ", "%20");
-    console.log(`Original Path: ${path}`);
-    console.log(`Handling Space: ${correctPath}`);
 
     let generatedURL = `https://github.com/${userName}/${repoName}/blob/${branchName}/${correctPath}`;
-    console.log(`Full URL: ${generatedURL}`);
 
-    urlSection.innerHTML += `
+    urlSection.innerHTML = `
         <div class="url">           
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" 
-            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Close" style="position: fixed; right: 10px; top: 10px; cursor: pointer;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" onclick="closeCont()"
+            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Close" 
+            style="position: fixed; right: 10px; top: 10px; cursor: pointer;">
                 <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
 
@@ -186,7 +180,7 @@ const getURL = (path) => {
                 <p class="url-animate">
                 https://github.com/${userName}/${repoName}/blob/${branchName}/${correctPath}
                 </p>
-                <button>
+                <button class="copy-btn" onclick="copy('${generatedURL}')">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="none" 
                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Copy">
                         <rect x="3.5" y="3.5" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" fill="none"/>
@@ -196,18 +190,20 @@ const getURL = (path) => {
             </div>
         </div>
     `
-
-    // return generatedURL;
-    // onclick="copy()"
 };
 
 
 
-/*
-// Function For Copy Text Functionality
-const copy = () => {
+// To close URL container
+function closeCont() {
+    urlSection.style.display = "none";
+}
 
-    let URL = getURL();
+
+
+// Function For Copy Text Functionality
+const copy = (URL) => {
+
     // Check If The Clipboard Api Is Available
     if (navigator.clipboard) {
 
@@ -218,24 +214,24 @@ const copy = () => {
                 alert("Text Copied!!");
             })
             .catch((error) => {
-                console.error("Error copying text: ", error);
                 alert("Failed to copy text. Please try again.");
             });
     }
 
     else {
-        // Fallback for older browsers
-        // Select the text field
-        URL.select();
-        URL.setSelectionRange(0, 99999); // For mobile devices
+        // Fallback for older browsers and mobile
+        const textArea = document.createElement("textarea");
+        textArea.value = URL;
+        document.body.appendChild(textArea);
+        textArea.select();
+        textArea.setSelectionRange(0, 99999); // For mobile devices
 
         try {
             document.execCommand("copy");
             alert("Text Copied!!");
         } catch (error) {
-            console.error("Error copying text: ", error);
             alert("Failed to copy text. Please try again.");
         }
+        document.body.removeChild(textArea);
     }
 };
-*/

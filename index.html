@@ -31,7 +31,7 @@
             align-items: center;
             gap: 30px;
             padding: 40px 30px;
-            width: 100%;
+            width: 95%;
             max-width: 400px;
             min-height: 450px;
             margin: auto;
@@ -77,7 +77,7 @@
             width: 100%;
         }
 
-        
+
 
         #fetchBtn {
             padding: 10px 20px;
@@ -92,14 +92,12 @@
         #fetchBtn:hover {
             background-color: rgb(88, 16, 129);
         }
-
-        
     </style>
-    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="style.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.min.css">
     </noscript>
-    <title>Github Repo Scanner</title>
+    <title>Github Repo Scanner 🔍</title>
 </head>
 
 <body>
@@ -113,7 +111,7 @@
         <section id="input-card">
             <h1 class="app-title">RepoScanner</h1>
 
-            <p class="app-des">Your lightweight GitHub repo explorer for files 🔍</p>
+            <p class="app-des">Your lightweight GitHub repo explorer for files</p>
 
             <input type="url" id="github-url" class="input-fields" placeholder="Enter Repo URL">
 
@@ -144,8 +142,7 @@
         </section>
     </main>
 
-    <!-- <script src="script.min.js" defer></script> -->
-    <script src="script.js" defer></script>
+    <script src="script.min.js"></script>
 
 </body>
 
